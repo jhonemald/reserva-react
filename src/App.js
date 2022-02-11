@@ -1,44 +1,60 @@
-import {
-BrowserRouter as Router,
+import 
+{BrowserRouter as Router,
 Routes,
 Route,
-Link
+Link,
+NavLink
 }
 from "react-router-dom";
-import Formulario from "./Components/Formulario";
-import LinkItem from "./Components/LinkItem";
+import { useState } from "react";
 import Login from "./Components/Login";
 import Inicio from "./Components/Inicio";
-import bus from './assets/img/bus2.jpg';
+
+import { Box, Text, Center, Heading,VStack, useColorMode,
+useColorModeValue,
+} from "@chakra-ui/react";
+import bus2 from "./assets/img/bus2.jpg";
 
 function App() {
+ 
+  const [IniciarSesion, setIniciarSesion] = useState(false);
+  const [usuarioActivo, setusuarioActivo] = useState('');
+  const [tomarreserva, settomarreserva] = useState ([]);
+  const colorText = useColorModeValue("white");
   return (
-    <div className="App">
-     <Router>
-       <div className="container mt-5 bg-primary">
-       <Link to="/Inicio" className="btn btn-dark">
-       <LinkItem name={"Inicio"} />
-       </Link>
-       <Link to= "/Login"className="btn btn-dark">
-        <LinkItem name ={"Login"} />
-       </Link>
-       < Link to= "/Formulario" className="btn btn-dark">
-       <LinkItem name ={"Formulario"} />
-       </Link>
-       <Routes>
-         <Route path ={"/"}>
-         <Route path = {"/Login"} element = {<Login/>}/>
-         <Route path = {"/Formulario"} element = {<Formulario/>}/>
-         <Route path = {"/inicio"} element = {<Inicio />}/>
-         <Route index element={<h1>RAIZ</h1>}/>
-         <Route path = {"/*"} element= {<h1>ERROR NO FUNCIONA</h1>}/>
-        </Route>
-      </Routes>
-      <hr/>
-      <img src={bus} alt ="" height="200 rem"/>
-      </div>
-    </Router> 
+    <Router>
+    <div style={{
+        backgroundImage: `url(${bus2})`,
+        height: "100vh",
+        width: "100%",
+        margin: 0,
+        backgroundSize: "cover",
+      }} > 
+    <div className="App"> 
+    <br/>   
+    <hr/>
+    <div>
     </div>
+   <center> 
+     <Text color ={"white"}>CompanyJEM </Text>
+   
+     <Text color ={"white"}>Viaja y Disfruta, Reserva ya...</Text></center>
+    </div>
+
+    {
+      !IniciarSesion ?
+      <Login setIniciarSesion={setIniciarSesion} setusuarioActivo={setusuarioActivo}/>
+    :
+    <Inicio  usuarioActivo={usuarioActivo} setIniciarSesion={setIniciarSesion}
+              tomarreserva={tomarreserva} settomarreserva={settomarreserva}/>
+    }
+
+    
+ 
+    </div>
+   
+    
+  </Router> 
   );
 }
 
